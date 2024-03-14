@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>
-using namespace std; // incepand cu laboratorul urmator, nu o sa mai folosim
+using namespace std;
 
 class Student
 {
