@@ -137,16 +137,6 @@ public:
             golds.push_back(newItem);
     }
 
-    // std::vector<Item> get() const
-    // {
-    //     std::vector<float> probabilities;
-    //     for (const auto &item : items)
-    //     {
-    //         probabilities.push_back(item.getProbability());
-    //     }
-    //     return probabilities;
-    // }
-
     // the case simulator, with the real CS2 odds
     Item openCase() const
     {
@@ -159,44 +149,54 @@ public:
         //     std::cout << "You got a ST Knife\n";
         // else if (index <= 4)
         //     std::cout << "You got a ST Convert\n";
-        if (index <= 13)
+        if (index <= 10)
         {
-            std::cout << "You got a Knife!\n";
+            // std::cout << "You got a Knife!\n";
             itemPick = itemPick % 13;
             return golds[itemPick];
         }
         // else if (index <= 25)
         //     std::cout << "You got a ST Classified\n";
-        else if (index <= 47)
+        else if (index <= 35)
         {
-            std::cout << "You got a Convert\n";
+            // std::cout << "You got a Convert\n";
             itemPick = itemPick % 2;
             return reds[itemPick];
         }
         // else if (index <= 110)
         //     std::cout << "You got a ST Restricted\n";
-        else if (index <= 223)
+        else if (index <= 161)
         {
-            std::cout << "You got a Classified\n";
+            // std::cout << "You got a Classified\n";
             itemPick = itemPick % 3;
             return pinks[itemPick];
         }
         // else if (index <= 536)
         //     std::cout << "You got a ST Mil-spec\n";
-        else if (index <= 1098)
+        else if (index <= 813)
         {
-            std::cout << "You got a Restricted\n";
+            // std::cout << "You got a Restricted\n";
             itemPick = itemPick % 5;
             return purples[itemPick];
         }
         else if (index <= 3910)
         {
-            std::cout << "You got a Mil-spec\n";
+            // std::cout << "You got a Mil-spec\n";
             itemPick = itemPick % 7;
             return blues[itemPick];
         }
     }
 };
+
+std::ostream &bold_on(std::ostream &os)
+{
+    return os << "\e[1m";
+}
+
+std::ostream &bold_off(std::ostream &os)
+{
+    return os << "\e[0m";
+}
 
 int main()
 {
@@ -286,7 +286,7 @@ int main()
     Item item30("Kukri Knife | Fade", 1500, "gold");
 
     // the case
-    Case kwCase("Kilowatt Case", 2.54);
+    Case kwCase("Kilowatt Case", 5);
     kwCase.addItem(item1);
     kwCase.addItem(item2);
     kwCase.addItem(item3);
@@ -322,8 +322,20 @@ int main()
     int userNumber;
     float spentOnCases = 0;
     float earnedFromCase = 0;
+    float totalSpent = 0;
+    float totalEarned = 0;
+    int blueCounter = 0;
+    int purpleCounter = 0;
+    int pinkCounter = 0;
+    int redCounter = 0;
+    int goldCounter = 0;
+    int totalBlueCounter = 0;
+    int totalPurpleCounter = 0;
+    int totalPinkCounter = 0;
+    int totalRedCounter = 0;
+    int totalGoldCounter = 0;
 
-    Sleep(2000);
+    Sleep(1500);
 
     while (true)
     {
@@ -331,13 +343,14 @@ int main()
         std::cout << "What do you want to do next? (type the number)" << std::endl;
         std::cout << "(1) Open cases!" << std::endl;
         std::cout << "(2) Show balance." << std::endl;
-        std::cout << "(3) Top up balance :)" << std::endl;
-        std::cout << "(4) Quit :/" << std::endl;
+        std::cout << "(3) Show analytics." << std::endl;
+        std::cout << "(4) Top up balance :)" << std::endl;
+        std::cout << "(5) Quit :/" << std::endl;
         std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
         std::cin >> userInput;
-        Sleep(1500);
-        if (userInput != "1" && userInput != "2" && userInput != "3" && userInput != "4")
+        Sleep(500);
+        if (userInput != "1" && userInput != "2" && userInput != "3" && userInput != "4" && userInput != "5")
         {
             std::cout << "Only numbers... try again? ('y' / 'n')" << std::endl;
             std::cin >> userInput;
@@ -358,7 +371,7 @@ int main()
                     break;
                 else
                 {
-                    Sleep(1500);
+                    Sleep(1000);
                     spentOnCases = userNumber * kwCase.getCasePrice();
                     earnedFromCase = 0;
                     if (availableBalance < spentOnCases)
@@ -368,26 +381,58 @@ int main()
                     else
                     {
                         std::cout << "Let's open..." << std::endl;
+                        blueCounter = 0;
+                        purpleCounter = 0;
+                        pinkCounter = 0;
+                        redCounter = 0;
+                        goldCounter = 0;
                         // std::cout << "Money spent on cases: " << spentOnCases << std::endl;
                         for (int i = 1; i <= userNumber; i++)
                         {
 
                             Item selected = kwCase.openCase();
-                            std::cout << "You obtained: ";
-                            selected.printItem();
+                            // std::cout << "You obtained: ";
+                            // selected.printItem();
+                            if (selected.getRarity() == "blue")
+                                blueCounter++;
+                            else if (selected.getRarity() == "purple")
+                                purpleCounter++;
+                            else if (selected.getRarity() == "pink")
+                                pinkCounter++;
+                            else if (selected.getRarity() == "red")
+                                redCounter++;
+                            else if (selected.getRarity() == "gold")
+                                goldCounter++;
                             earnedFromCase += selected.getItemPrice();
                         }
                         availableBalance -= spentOnCases;
+                        totalBlueCounter += blueCounter;
+                        totalPurpleCounter += purpleCounter;
+                        totalPinkCounter += pinkCounter;
+                        totalRedCounter += redCounter;
+                        totalGoldCounter += goldCounter;
+                        Sleep(1000);
+                        std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+                        if (blueCounter != 0)
+                            std::cout << "You got " << blueCounter << " blues." << std::endl;
+                        if (purpleCounter != 0)
+                            std::cout << "You got " << purpleCounter << " purples." << std::endl;
+                        if (pinkCounter != 0)
+                            std::cout << "You got " << pinkCounter << " pinks!" << std::endl;
+                        if (redCounter != 0)
+                            std::cout << "You got " << redCounter << " reds!!" << std::endl;
+                        if (goldCounter != 0)
+                            std::cout << "You got " << goldCounter << " golds!!!" << std::endl;
+                        std::cout << "You spent: " << spentOnCases << "$ on cases." << std::endl;
+                        std::cout << "You earned items valued at: " << earnedFromCase << "$." << std::endl;
+                        if (earnedFromCase - spentOnCases < 0)
+                            std::cout << "So you lost: " << earnedFromCase - spentOnCases << "$." << std::endl;
+                        else
+                            std::cout << "So you earned: " << earnedFromCase - spentOnCases << "$." << std::endl;
+                        std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+                        totalEarned += earnedFromCase - spentOnCases;
+                        totalSpent += spentOnCases;
                     }
-                    Sleep(500);
-                    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-                    std::cout << "You spent: " << spentOnCases << "$ on cases." << std::endl;
-                    std::cout << "You earned items valued at: " << earnedFromCase << "$." << std::endl;
-                    if (earnedFromCase - spentOnCases < 0)
-                        std::cout << "So you lost: " << earnedFromCase - spentOnCases << "$." << std::endl;
-                    else
-                        std::cout << "So you earned: " << earnedFromCase - spentOnCases << "$." << std::endl;
-                    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
                     Sleep(1000);
                     std::cout << "Try again? ('y'/'n')" << std::endl;
                     std::cin >> userInput;
@@ -401,20 +446,43 @@ int main()
         }
         else if (userInput == "2")
         {
-            Sleep(500);
+            Sleep(1000);
             std::cout << "Current Balance: " << availableBalance << "$." << std::endl;
-            Sleep(500);
+            Sleep(1000);
         }
         else if (userInput == "3")
         {
-            Sleep(500);
-            availableBalance += 1000;
-            std::cout << "You got an additional 1000$." << std::endl;
-            std::cout << "(99% of all gamblers stop before a lifechanging win...)" << std::endl;
+            Sleep(1000);
+            std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+            std::cout << "You spent " << totalSpent << "$ on cases." << std::endl;
+            if (totalEarned < 0)
+                std::cout << "You lost: " << totalEarned << "$ opening cases. Bad luck?" << std::endl;
+            else
+                std::cout << "You earned: " << totalEarned << "$ opening cases. Suspicious..." << std::endl;
+            if (totalBlueCounter != 0)
+                std::cout << "You got " << totalBlueCounter << " blues." << std::endl;
+            if (totalPurpleCounter != 0)
+                std::cout << "You got " << totalPurpleCounter << " purples." << std::endl;
+            if (totalPinkCounter != 0)
+                std::cout << "You got " << totalPinkCounter << " pinks!" << std::endl;
+            if (totalRedCounter != 0)
+                std::cout << "You got " << totalRedCounter << " reds!!" << std::endl;
+            if (totalGoldCounter != 0)
+                std::cout << "You got " << totalGoldCounter << " golds!!!" << std::endl;
+            std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+            Sleep(1000);
         }
         else if (userInput == "4")
         {
-            Sleep(500);
+            Sleep(1000);
+            availableBalance += 1000;
+            std::cout << "You got an additional 1000$." << std::endl;
+            std::cout << "(99% of all gamblers stop before a lifechanging win...)" << std::endl;
+            Sleep(1000);
+        }
+        else if (userInput == "5")
+        {
+            Sleep(1000);
             std::cout << "Bye!" << std::endl;
             break;
         }
