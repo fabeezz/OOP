@@ -1,202 +1,14 @@
+#include "player.h"
+#include "item.h"
+#include "case.h"
 #include <iostream>
 #include <string>
 #include <vector>
+#include <list>
 #include <random>
 #include <cstdlib>
 #include <time.h>
 #include <windows.h>
-
-class Player
-{
-private:
-    std::string playerName;
-    float balance;
-    std::string password;
-
-public:
-    Player(const std::string &name, float balance, const std::string &password) : playerName(name), balance(balance), password(password)
-    {
-        // std::cout << "Constr. de init. pentru Player: " << playerName << std::endl;
-    }
-
-    // Check if the password and player name are correct
-    bool authPassword(const std::string &inputPassword) const
-    {
-        return inputPassword == password;
-    }
-
-    bool authPlayerName(const std::string &inputPlayerName) const
-    {
-        return inputPlayerName == playerName;
-    }
-
-    // Getters for playerName and balance
-    std::string getName() const
-    {
-        return playerName;
-    }
-    float getBalance() const
-    {
-        return balance;
-    }
-};
-
-class Item
-{
-private:
-    std::string itemName;
-    float itemPrice;
-    std::string itemRarity;
-
-public:
-    Item(const std::string &name, float price, std::string rarity) : itemName(name), itemPrice(price), itemRarity(rarity)
-    {
-        // std::cout << "Constr. de init. Item" << itemName << std::endl;
-    }
-
-    // Getter function to output all information about the item
-    void printItem() const
-    {
-        std::cout << "Item Name: " << itemName << ", Price: " << itemPrice << std::endl; // €
-    }
-
-    // Getter for the rarityy/color
-    std::string getRarity() const
-    {
-        return itemRarity;
-    }
-
-    // Getter for item price
-    float getItemPrice() const
-    {
-        return itemPrice;
-    }
-};
-
-class Case
-{
-private:
-    std::string caseName;
-    float casePrice;
-    std::vector<Item> items;
-
-public:
-    // vectors for each rariry, for storage
-    std::vector<Item> blues;
-    std::vector<Item> purples;
-    std::vector<Item> pinks;
-    std::vector<Item> reds;
-    std::vector<Item> golds;
-
-    Case(const std::string &caseName_, float casePrice_) : caseName(caseName_), casePrice(casePrice_)
-    {
-        // std::cout << "Constr. de init. Case: " << caseName << std::endl;
-    }
-
-    Case(const Case &other) : caseName(other.caseName), casePrice(other.casePrice)
-    {
-        std::cout << "Constr. de copiere Case" << std::endl;
-    }
-
-    ~Case()
-    {
-        // std::cout << "Destr. Case" << std::endl;
-    }
-
-    // Getter function to output all information about the case, including its items
-    void printCase() const
-    {
-        std::cout << "Case Name: " << caseName << ", Price: " << casePrice << std::endl;
-        std::cout << "Items in the case:" << std::endl;
-        for (const auto &item : items)
-        {
-            item.printItem();
-        }
-    }
-
-    float getCasePrice()
-    {
-        return casePrice;
-    }
-
-    // function to add all items to 'items' vector and their correct rarity vector
-    void addItem(const Item &newItem)
-    {
-        items.push_back(newItem);
-        std::string color;
-        color = newItem.getRarity();
-        if (color == "blue")
-            blues.push_back(newItem);
-        else if (color == "purple")
-            purples.push_back(newItem);
-        else if (color == "pink")
-            pinks.push_back(newItem);
-        else if (color == "red")
-            reds.push_back(newItem);
-        else if (color == "gold")
-            golds.push_back(newItem);
-    }
-
-    // the case simulator, with the real CS2 odds
-    Item openCase() const
-    {
-        int index = (rand() % 3910) + 1;
-        int itemPick = rand();
-
-        // std::cout << "Selected index: " << index << std::endl;
-
-        // if (index == 1)
-        //     std::cout << "You got a ST Knife\n";
-        // else if (index <= 4)
-        //     std::cout << "You got a ST Convert\n";
-        if (index <= 10)
-        {
-            // std::cout << "You got a Knife!\n";
-            itemPick = itemPick % 13;
-            return golds[itemPick];
-        }
-        // else if (index <= 25)
-        //     std::cout << "You got a ST Classified\n";
-        else if (index <= 35)
-        {
-            // std::cout << "You got a Convert\n";
-            itemPick = itemPick % 2;
-            return reds[itemPick];
-        }
-        // else if (index <= 110)
-        //     std::cout << "You got a ST Restricted\n";
-        else if (index <= 161)
-        {
-            // std::cout << "You got a Classified\n";
-            itemPick = itemPick % 3;
-            return pinks[itemPick];
-        }
-        // else if (index <= 536)
-        //     std::cout << "You got a ST Mil-spec\n";
-        else if (index <= 813)
-        {
-            // std::cout << "You got a Restricted\n";
-            itemPick = itemPick % 5;
-            return purples[itemPick];
-        }
-        else if (index <= 3910)
-        {
-            // std::cout << "You got a Mil-spec\n";
-            itemPick = itemPick % 7;
-            return blues[itemPick];
-        }
-    }
-};
-
-std::ostream &bold_on(std::ostream &os)
-{
-    return os << "\e[1m";
-}
-
-std::ostream &bold_off(std::ostream &os)
-{
-    return os << "\e[0m";
-}
 
 int main()
 {
@@ -206,9 +18,10 @@ int main()
     // players
     std::vector<Player> players;
     players.push_back(Player("Fabi", 5000, "parolafabi"));
-    players.push_back(Player("Tudi", 100, "parolatudi"));
-    players.push_back(Player("Cosmin", 200, "parolacosmin"));
-    players.push_back(Player("Vlad", 300, "parolavlad"));
+    players.push_back(Player("Tudi", 1000, "parolatudi"));
+    players.push_back(Player("Cosmin", 2000, "parolacosmin"));
+    players.push_back(Player("Vlad", 1000000, "parolavlad"));
+    players.push_back(Player("Random", rand() % 1000000, "parolarandom"));
 
     // authetication method
     std::string inputPlayerName;
@@ -287,6 +100,7 @@ int main()
 
     // the case
     Case kwCase("Kilowatt Case", 5);
+    // posibility to add more cases...
     kwCase.addItem(item1);
     kwCase.addItem(item2);
     kwCase.addItem(item3);
@@ -343,14 +157,15 @@ int main()
         std::cout << "What do you want to do next? (type the number)" << std::endl;
         std::cout << "(1) Open cases!" << std::endl;
         std::cout << "(2) Show balance." << std::endl;
-        std::cout << "(3) Show analytics." << std::endl;
-        std::cout << "(4) Top up balance :)" << std::endl;
-        std::cout << "(5) Quit :/" << std::endl;
+        std::cout << "(3) Show case!" << std::endl;
+        std::cout << "(4) Show analytics." << std::endl;
+        std::cout << "(5) Top up balance :)" << std::endl;
+        std::cout << "(6) Quit :/" << std::endl;
         std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
         std::cin >> userInput;
         Sleep(500);
-        if (userInput != "1" && userInput != "2" && userInput != "3" && userInput != "4" && userInput != "5")
+        if (userInput != "1" && userInput != "2" && userInput != "3" && userInput != "4" && userInput != "5" && userInput != "6")
         {
             std::cout << "Only numbers... try again? ('y' / 'n')" << std::endl;
             std::cin >> userInput;
@@ -365,13 +180,16 @@ int main()
             while (true)
             {
                 std::cout << "You got " << availableBalance << "$ left." << std::endl;
-                std::cout << "How many cases do you want to open? ('0' to quit)" << std::endl;
+                std::cout << "Case price: " << kwCase.getCasePrice() << "$." << std::endl;
+                std::cout << "How many cases do you want to open? ('-1' - all in, '0' - quit)" << std::endl;
                 std::cin >> userNumber;
                 if (userNumber == 0)
                     break;
                 else
                 {
                     Sleep(1000);
+                    if (userNumber == -1)
+                        userNumber = availableBalance / (kwCase.getCasePrice());
                     spentOnCases = userNumber * kwCase.getCasePrice();
                     earnedFromCase = 0;
                     if (availableBalance < spentOnCases)
@@ -426,12 +244,19 @@ int main()
                         std::cout << "You spent: " << spentOnCases << "$ on cases." << std::endl;
                         std::cout << "You earned items valued at: " << earnedFromCase << "$." << std::endl;
                         if (earnedFromCase - spentOnCases < 0)
-                            std::cout << "So you lost: " << earnedFromCase - spentOnCases << "$." << std::endl;
+                        {
+                            std::cout << "So you lost: " << earnedFromCase - spentOnCases << "$. ";
+                            std::cout << "That's " << ((spentOnCases - earnedFromCase) / spentOnCases) * 100 << "% of your money lost... Well done!" << std::endl;
+                        }
                         else
-                            std::cout << "So you earned: " << earnedFromCase - spentOnCases << "$." << std::endl;
+                        {
+                            std::cout << "So you earned: " << earnedFromCase - spentOnCases << "$. ";
+                            std::cout << "That's " << ((earnedFromCase - spentOnCases) / spentOnCases) * 100 << "% profit ... Great!" << std::endl;
+                        }
                         std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
                         totalEarned += earnedFromCase - spentOnCases;
                         totalSpent += spentOnCases;
+                        availableBalance += earnedFromCase;
                     }
                     Sleep(1000);
                     std::cout << "Try again? ('y'/'n')" << std::endl;
@@ -448,9 +273,13 @@ int main()
         {
             Sleep(1000);
             std::cout << "Current Balance: " << availableBalance << "$." << std::endl;
-            Sleep(1000);
+            Sleep(3000);
         }
         else if (userInput == "3")
+        {
+            std::cout << kwCase << std::endl;
+        }
+        else if (userInput == "4")
         {
             Sleep(1000);
             std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
@@ -472,17 +301,17 @@ int main()
             std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
             Sleep(1000);
         }
-        else if (userInput == "4")
-        {
-            Sleep(1000);
-            availableBalance += 1000;
-            std::cout << "You got an additional 1000$." << std::endl;
-            std::cout << "(99% of all gamblers stop before a lifechanging win...)" << std::endl;
-            Sleep(1000);
-        }
         else if (userInput == "5")
         {
             Sleep(1000);
+            availableBalance += 10000;
+            std::cout << "You got an additional 10,000$." << std::endl;
+            std::cout << "(99% of all gamblers stop before a lifechanging win...)" << std::endl;
+            Sleep(1000);
+        }
+        else if (userInput == "6")
+        {
+            Sleep(500);
             std::cout << "Bye!" << std::endl;
             break;
         }
