@@ -1,0 +1,11 @@
+10
+1001 JohnDoe 8
+1002 JaneSmith 7
+1003 MichaelJohnson 9
+1004 EmilyBrown 4
+1005 DavidWilson 8
+1006 SarahMartinez 8
+1007 JamesTaylor 7
+1008 EmmaAnderson 9
+1009 DanielThomas 4
+1010 OliviaGarcia 9
