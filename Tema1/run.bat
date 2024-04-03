@@ -1,12 +1,12 @@
 @echo off
 REM Compile each source file
-g++ -c main.cpp -o main.o
-g++ -c player.cpp -o player.o
-g++ -c item.cpp -o item.o
-g++ -c case.cpp -o case.o
+g++ -c main.cpp -o obj/main.o
+g++ -c src/player.cpp -o obj/player.o
+g++ -c src/item.cpp -o obj/item.o
+g++ -c src/case.cpp -o objcase.o
 
 REM Link object files to create an executable
-g++ main.o player.o item.o case.o -o case_simulator
+g++ obj/main.o obj/player.o obj/item.o obj/case.o -o case_simulator
 
 REM Run the executable
 case_simulator

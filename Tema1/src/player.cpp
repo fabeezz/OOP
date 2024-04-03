@@ -1,4 +1,4 @@
-#include "player.h"
+#include "../include/player.h"
 
 Player::Player(const std::string &name, float balance, const std::string &password)
     : playerName(name), balance(balance), password(password) {}

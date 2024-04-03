@@ -1,6 +1,6 @@
-#include "player.h"
-#include "item.h"
-#include "case.h"
+#include "include/player.h"
+#include "include/item.h"
+#include "include/case.h"
 #include <iostream>
 #include <string>
 #include <vector>

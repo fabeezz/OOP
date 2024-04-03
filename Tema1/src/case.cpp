@@ -1,4 +1,4 @@
-#include "case.h"
+#include "../include/case.h"
 #include <cstdlib>
 #include <time.h>
 #include <random>
