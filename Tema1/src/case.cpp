@@ -88,7 +88,7 @@ Item Case::openCase() const
 
 std::ostream &operator<<(std::ostream &os, const Case &case_)
 {
-    os << "Case Name: " << case_.getCaseName() << ", Price: " << case_.getCasePrice() << std::endl;
+    os << "Case Name: " << case_.getCaseName() << ", Price: " << case_.getCasePrice() << "$." << std::endl;
     os << "Items in the case:" << std::endl;
     for (const auto &item : case_.getItems())
     {

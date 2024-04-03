@@ -17,6 +17,12 @@ The simulation includes an authentication system for players, a case system with
 2. Navigate to the directory containing `main.cpp`.
 3. Compile the program using `run.bat`:
 
+### 🚔 How to authenticate?
+
+1. **Username**: `Random` (random balance)
+2. **Password**: `parolarandom`
+3. Have fun making/**losing** money!
+
 ### 🎮 Usage
 
 Follow the on-screen prompts to interact with the simulator. The options include:

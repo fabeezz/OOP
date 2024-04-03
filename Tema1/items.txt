@@ -1,0 +1,31 @@
+30
+Dual Berettas | Hideout?0.3?blue
+Nova | Dark Sigil?0.3?blue
+Tec-9 | Slag?0.4?blue
+UMP-45 | Motorized?0.35?blue
+XM1014 | Irezumi?0.3?blue
+SSG 08 | Dezastre?0.5?blue
+MAC-10 | Light Box?0.7?blue
+MP7 | Just Smile?2.15?purple
+Sawed-Off | Analog Input?2.3?purple
+Five-SeveN | Hybrid?2.25?purple
+M4A4 | Etch Lord?3?purple
+Glock-18 | Block-18?3.5?purple
+USP-S | Jawbreaker?15.5?pink
+Zeus x27 | Olympus?17?pink
+M4A1-S | Black Lotus?35?pink
+AK-47 | Inheritance?130?red
+AWP | Chrome Cannon?110?red
+Kukri Knife | Vanilla?1044?gold
+Kukri Knife | Slaughter?950?gold
+Kukri Knife | Blue Steel?650?gold
+Kukri Knife | Case Hardened?1000?gold
+Kukri Knife | Crimson Web?870?gold
+Kukri Knife | Stained?450?gold
+Kukri Knife | Scorched?400?gold
+Kukri Knife | Forest DDPAT?500?gold
+Kukri Knife | Night Stripe?550?gold
+Kukri Knife | Safari Mesh?350?gold
+Kukri Knife | Urban Masked?400?gold
+Kukri Knife | Boreal Forest?350?gold
+Kukri Knife | Fade?1500?gold

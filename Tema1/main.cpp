@@ -1,14 +1,48 @@
+///
 #include "include/player.h"
 #include "include/item.h"
 #include "include/case.h"
+///
 #include <iostream>
+#include <fstream>
+#include <sstream>
+///
 #include <string>
 #include <vector>
 #include <list>
+///
 #include <random>
 #include <cstdlib>
 #include <time.h>
 #include <windows.h>
+
+// read item's info from text file and add them
+void caseItemAdd(Case &case_, const std::string &fileName_)
+{
+    std::ifstream file(fileName_);
+    std::string line;
+    std::getline(file, line);
+    int itemCount = std::stoi(line);
+    std::getline(file, line);
+    for (int i = 1; i <= itemCount; i++)
+    {
+        if (std::getline(file, line))
+        {
+            std::istringstream iss(line);
+            std::string name;
+            std::string priceStr;
+            float price;
+            std::string rarity;
+            std::getline(iss, name, '?');
+            std::getline(iss, priceStr, '?');
+            price = std::stof(priceStr);
+            std::getline(iss, rarity, '?');
+            Item item(name, price, rarity);
+            case_.addItem(item);
+        }
+    }
+    file.close();
+}
 
 int main()
 {
@@ -64,73 +98,9 @@ int main()
         }
     }
 
-    // std::cout << "Current Balance: " << availableBalance << std::endl;
-
-    // items
-    Item item1("Dual Berettas | Hideout", 0.3, "blue");
-    Item item2("Nova | Dark Sigil", 0.3, "blue");
-    Item item3("Tec-9 | Slag", 0.4, "blue");
-    Item item4("UMP-45 | Motorized", 0.35, "blue");
-    Item item5("XM1014 | Irezumi", 0.3, "blue");
-    Item item6("SSG 08 | Dezastre", 0.5, "blue");
-    Item item7("MAC-10 | Light Box", 0.7, "blue");
-    Item item8("MP7 | Just Smile", 2.15, "purple");
-    Item item9("Sawed-Off | Analog Input", 2.3, "purple");
-    Item item10("Five-SeveN | Hybrid", 2.25, "purple");
-    Item item11("M4A4 | Etch Lord", 3, "purple");
-    Item item12("Glock-18 | Block-18", 3.5, "purple");
-    Item item13("USP-S | Jawbreaker", 15.5, "pink");
-    Item item14("Zeus x27 | Olympus", 17, "pink");
-    Item item15("M4A1-S | Black Lotus", 35, "pink");
-    Item item16("AK-47 | Inheritance", 130, "red");
-    Item item17("AWP | Chrome Cannon", 110, "red");
-    Item item18("Kukri Knife | Vanilla", 1044, "gold");
-    Item item19("Kukri Knife | Slaughter", 950, "gold");
-    Item item20("Kukri Knife | Blue Steel", 650, "gold");
-    Item item21("Kukri Knife | Case Hardened", 1000, "gold");
-    Item item22("Kukri Knife | Crimson Web", 870, "gold");
-    Item item23("Kukri Knife | Stained", 450, "gold");
-    Item item24("Kukri Knife | Scorched", 400, "gold");
-    Item item25("Kukri Knife | Forest DDPAT", 500, "gold");
-    Item item26("Kukri Knife | Night Stripe", 550, "gold");
-    Item item27("Kukri Knife | Safari Mesh", 350, "gold");
-    Item item28("Kukri Knife | Urban Masked", 400, "gold");
-    Item item29("Kukri Knife | Boreal Forest", 350, "gold");
-    Item item30("Kukri Knife | Fade", 1500, "gold");
-
     // the case
     Case kwCase("Kilowatt Case", 5);
-    // posibility to add more cases...
-    kwCase.addItem(item1);
-    kwCase.addItem(item2);
-    kwCase.addItem(item3);
-    kwCase.addItem(item4);
-    kwCase.addItem(item5);
-    kwCase.addItem(item6);
-    kwCase.addItem(item7);
-    kwCase.addItem(item8);
-    kwCase.addItem(item9);
-    kwCase.addItem(item10);
-    kwCase.addItem(item11);
-    kwCase.addItem(item12);
-    kwCase.addItem(item13);
-    kwCase.addItem(item14);
-    kwCase.addItem(item15);
-    kwCase.addItem(item16);
-    kwCase.addItem(item17);
-    kwCase.addItem(item18);
-    kwCase.addItem(item19);
-    kwCase.addItem(item20);
-    kwCase.addItem(item21);
-    kwCase.addItem(item22);
-    kwCase.addItem(item23);
-    kwCase.addItem(item24);
-    kwCase.addItem(item25);
-    kwCase.addItem(item26);
-    kwCase.addItem(item27);
-    kwCase.addItem(item28);
-    kwCase.addItem(item29);
-    kwCase.addItem(item30);
+    caseItemAdd(kwCase, "items.txt");
 
     std::string userInput;
     int userNumber;
