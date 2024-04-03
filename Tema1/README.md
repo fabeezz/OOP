@@ -28,6 +28,28 @@ Follow the on-screen prompts to interact with the simulator. The options include
 5. **💳 Top up balance**: Add funds to your balance.
 6. **🚪 Quit**: Exit the simulator.
 
+## 📚 Class Variables Overview
+
+The simulation is built around several key classes, each with its own set of variables that drive the functionality of the simulator:
+
+- ⛹️‍♂️ **Player**: Represents a player in the simulator.
+  - `playerName`: The name of the player.
+  - `balance`: The current balance of the player.
+  - `password`: The player's password for authentication.
+
+- 🔫 **Item**: Represents an item that can be found within a case.
+  - `itemName`: The name of the item.
+  - `itemPrice`: The price or value of the item.
+  - `itemRarity`: The rarity category of the item (e.g., blue, purple, pink, red, gold).
+
+- 🎁 **Case**: Represents a case that players can open to receive items.
+  - `caseName`: The name of the case.
+  - `casePrice`: The price to open the case.
+  - `items`: A collection of items that can be obtained from the case.
+  - Rarity vectors (`blues`, `purples`, `pinks`, `reds`, `golds`): Collections of items categorized by rarity.
+
+These classes and their variables are central to the operation of the case simulator, managing everything from user authentication to the logic of case opening and item distribution.
+
 ## ⚠️ Disclaimer
 
 This simulator is for educational and entertainment purposes only. It does not involve real money or gambling.
