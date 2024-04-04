@@ -100,7 +100,7 @@ int main()
 
     // the case
     Case kwCase("Kilowatt Case", 5);
-    caseItemAdd(kwCase, "items.txt");
+    caseItemAdd(kwCase, "resources/items.txt");
 
     std::string userInput;
     int userNumber;
