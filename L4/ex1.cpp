@@ -30,7 +30,7 @@ public:
         if (this == &other)
             return *this;
 
-        this->numarMatricol = numarMatricol;
+        this->numarMatricol = other.numarMatricol;
         this->nume = nume;
         this->nota = nota;
         return *this;
